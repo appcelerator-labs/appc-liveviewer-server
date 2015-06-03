@@ -1,0 +1,37 @@
+{
+  "name": "appc-liveviewer-server",
+  "version": "1.0.0",
+  "description": "Server for the LiveViewer app",
+  "keywords": [
+    "appcelerator",
+    "liveview",
+    "alloy"
+  ],
+  "author": "Fokke Zandbergen",
+  "license": "Appcelerator Software License (non-open source)",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fokkezb/appc-liveviewer-server.git"
+  },
+  "homepage": "https://github.com/fokkezb/appc-liveviewer-server",
+  "bugs": {
+    "url": "https://github.com/fokkezb/appc-liveviewer-server/issues"
+  },
+  "dependencies": {
+    "alloy": "^1.6.0",
+    "async": "^1.1.0",
+    "node-uuid": "^1.4.3",
+    "request": "^2.57.0",
+    "send": "^0.12.3",
+    "underscore": "^1.8.3"
+  }
+}
