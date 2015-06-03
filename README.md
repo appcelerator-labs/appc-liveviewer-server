@@ -17,7 +17,7 @@ Then use it as:
 
 [http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
 
-### `url`
+### Param: `url`
 An URL to get the Alloy or Classic source code from.
 
 #### Accepted URLs
@@ -45,7 +45,7 @@ The root of the downloaded source code (which can be a subdirectory in a reposit
   
 As you can see the Alloy `app` folder or Classic `Resources` folder does not need to be wrapped in a project. For GitHub gists I even plan to support XML, TSS and JS files to be in the same directory and assume they are views, styles and controllers.
 
-### `platform`
+### Param: `platform`
 A string with one of:
 
 * `ios`
@@ -64,13 +64,13 @@ engine.auto('https://github.com/appcelerator/alloy/tree/master/samples/rss', 'io
 
 ### `auto(url, platform, callback)`
 
-#### `url`
+#### Argument: `url`
 See [url](#url) under *Run the server*.
 
-#### `platform`
+#### Argument: `platform`
 See [platform](#platform) under *Run the server*.
 
-#### `callback`
+#### Argument: `callback`
 Will be called with error as first argument and the path to the generated zip-file as the second.
 
 You should clean up the zip-file after you're done wit it. For example:
