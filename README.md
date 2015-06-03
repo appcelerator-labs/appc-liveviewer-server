@@ -65,10 +65,10 @@ engine.auto('https://github.com/appcelerator/alloy/tree/master/samples/rss', 'io
 ### `auto(url, platform, callback)`
 
 #### `url`
-See *Run the server*.
+See [url](#url) under *Run the server*.
 
 #### `platform`
-See *Run the server*.
+See [platform](#platform) under *Run the server*.
 
 #### `callback`
 Will be called with error as first argument and the path to the generated zip-file as the second.
