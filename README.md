@@ -4,6 +4,10 @@ Server-component for the Appcelerator LiveViewer app.
 
 It takes a target platform and source URL and returns a ZIP file of the (Alloy compiled) project.
 
+## Prerequisites
+
+* Subversion: `apt-get install subversion`
+
 ## Run the server
 
 ```
@@ -16,6 +20,8 @@ npm start
 Then use it as:
 
 [http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
+
+In production you'd probably use `forever start index.js` or something like that.
 
 ### Param: `url`
 An URL to get the Alloy or Classic source code from.
