@@ -27,7 +27,7 @@ describe('lib/engine', function () {
 			output: {
 				alloy: true,
 				file: false,
-				path: '/'
+				path: ''
 			}
 		}, {
 			input: path.join(PATH_FIXTURES, 'alloy/app'),
@@ -41,7 +41,7 @@ describe('lib/engine', function () {
 			output: {
 				alloy: false,
 				file: false,
-				path: '/'
+				path: ''
 			}
 		}, {
 			input: path.join(PATH_FIXTURES, 'classic/Resources'),
@@ -82,251 +82,148 @@ describe('lib/engine', function () {
 	});
 
 	describe('#move', function () {
-		var from, to;
 
-		beforeEach(function () {
-			from = path.join(os.tmpdir(), uuid.v4());
-			to = path.join(os.tmpdir(), uuid.v4());
-		});
+		var tests = [{
+			path: 'classic',
+			analysis: {
+				path: '',
+				file: false
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'classic/Resources',
+			analysis: {
+				path: '/Resources',
+				file: false
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'supported.js',
+			analysis: {
+				path: '/Resources/app.js',
+				file: true
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'alloy',
+			analysis: {
+				path: '',
+				file: false
+			},
+			output: 'app/controllers/index.js'
+		}, {
+			path: 'alloy/app',
+			analysis: {
+				path: '/app',
+				file: false
+			},
+			output: 'app/controllers/index.js'
+		}];
 
-		it('should handle Classic project', function (done) {
+		tests.forEach(function (test) {
 
-			utils.cp(path.join(PATH_FIXTURES, 'classic'), from, function (err) {
+			it('should handle ' + test.path, function (done) {
+				var fixturesCopy = path.join(os.tmpdir(), uuid.v4());
+				var to = path.join(os.tmpdir(), uuid.v4());
 
-				if (err) {
+				function finish(err) {
+					var paths = [fixturesCopy];
+
+					if (err) {
+						console.error('CHECK: ' + to);
+					} else {
+						paths.push(to);
+					}
+
+					utils.rm(paths);
+
 					return done(err);
 				}
 
-				mod.move(from, to, {
-					path: '/',
-					file: false
-				}, function (err) {
+				utils.cp(PATH_FIXTURES, fixturesCopy, function (err) {
 
 					if (err) {
-						return done(err);
+						return finish(err);
 					}
 
-					return utils.isFile(path.join(to, 'Resources', 'app.js'), function (err, file) {
+					mod.move(path.join(fixturesCopy, test.path), to, test.analysis, function (err) {
 
 						if (err) {
-							return done(err);
+							return finish(err);
 						}
 
-						file.should.be.True;
+						return utils.isFile(path.join(to, test.output), function (err, file) {
 
-						done();
+							if (err) {
+								return finish(err);
+							}
+
+							file.should.be.True;
+
+							return finish();
+						});
+
 					});
-
 				});
-
 			});
-
 		});
-
-		it('should handle Classic Resources folder', function (done) {
-
-			utils.cp(path.join(PATH_FIXTURES, 'classic', 'Resources'), from, function (err) {
-
-				if (err) {
-					return done(err);
-				}
-
-				mod.move(from, to, {
-					path: '/Resources',
-					file: false
-				}, function (err) {
-
-					if (err) {
-						return done(err);
-					}
-
-					return utils.isFile(path.join(to, 'Resources', 'app.js'), function (err, file) {
-
-						if (err) {
-							return done(err);
-						}
-
-						file.should.be.True;
-
-						done();
-					});
-
-				});
-
-			});
-
-		});
-
-		it('should handle Classic file', function (done) {
-
-			utils.cp(path.join(PATH_FIXTURES, 'supported.js'), from, function (err) {
-
-				if (err) {
-					return done(err);
-				}
-
-				mod.move(from, to, {
-					path: '/Resources/app.js',
-					file: true
-				}, function (err) {
-
-					if (err) {
-						return done(err);
-					}
-
-					return utils.isFile(path.join(to, 'Resources', 'app.js'), function (err, file) {
-
-						if (err) {
-							return done(err);
-						}
-
-						file.should.be.True;
-
-						done();
-					});
-
-				});
-
-			});
-
-		});
-
-		it('should handle Alloy project', function (done) {
-
-			utils.cp(path.join(PATH_FIXTURES, 'alloy'), from, function (err) {
-
-				if (err) {
-					return done(err);
-				}
-
-				mod.move(from, to, {
-					path: '/',
-					file: false
-				}, function (err) {
-
-					if (err) {
-						return done(err);
-					}
-
-					return utils.isFile(path.join(to, 'app', 'controllers', 'index.js'), function (err, file) {
-
-						if (err) {
-							return done(err);
-						}
-
-						file.should.be.True;
-
-						done();
-					});
-
-				});
-
-			});
-
-		});
-
-		it('should handle Alloy app folder', function (done) {
-
-			utils.cp(path.join(PATH_FIXTURES, 'alloy', 'app'), from, function (err) {
-
-				if (err) {
-					return done(err);
-				}
-
-				mod.move(from, to, {
-					path: '/app',
-					file: false
-				}, function (err) {
-
-					if (err) {
-						return done(err);
-					}
-
-					return utils.isFile(path.join(to, 'app', 'controllers', 'index.js'), function (err, file) {
-
-						if (err) {
-							return done(err);
-						}
-
-						file.should.be.True;
-
-						done();
-					});
-
-				});
-
-			});
-
-		});
-
-		afterEach(function () {
-			utils.rm(from);
-			utils.rm(to);
-		});
-
 	});
 
 	describe('#process', function () {
-		var fixturesCopy = path.join(os.tmpdir(), uuid.v4());
-		var processPath = path.join(os.tmpdir(), uuid.v4());
+		var tests = ['classic', 'alloy'];
 
-		beforeEach(function (done) {
-			return utils.cp(PATH_FIXTURES, fixturesCopy, done);
-		});
+		tests.forEach(function (fixture) {
 
-		it('should handle a Classic project', function (done) {
-			var sourcePath = path.join(fixturesCopy, 'classic');
-			var platform = 'ios';
+			it('should handle ' + fixture, function (done) {
+				var fixturesCopy = path.join(os.tmpdir(), uuid.v4());
+				var to = path.join(os.tmpdir(), uuid.v4());
 
-			mod.process(sourcePath, processPath, platform, function (err) {
+				function finish(err) {
+					var paths = [fixturesCopy];
 
-				if (err) {
+					if (err) {
+						console.error('CHECK: ' + to);
+					} else {
+						paths.push(to);
+					}
+
+					utils.rm(paths);
+
 					return done(err);
 				}
 
-				return utils.isFile(path.join(processPath, 'Resources', 'app.js'), function (err, file) {
+				utils.cp(PATH_FIXTURES, fixturesCopy, function (err) {
 
 					if (err) {
-						return done(err);
+						return finish(err);
 					}
 
-					file.should.be.True;
+					var sourcePath = path.join(fixturesCopy, fixture);
+					var platform = 'ios';
 
-					done();
+					mod.process(sourcePath, to, platform, function (err) {
+
+						if (err) {
+							return finish(err);
+						}
+
+						return utils.isFile(path.join(to, 'Resources', 'app.js'), function (err, file) {
+
+							if (err) {
+								return finish(err);
+							}
+
+							file.should.be.True;
+
+							return finish();
+						});
+
+					});
+
 				});
 
 			});
 
-		});
-
-		it('should handle an Alloy project', function (done) {
-			var sourcePath = path.join(fixturesCopy, 'alloy');
-			var platform = 'ios';
-
-			mod.process(sourcePath, processPath, platform, function (err) {
-
-				if (err) {
-					return done(err);
-				}
-
-				return utils.isFile(path.join(processPath, 'Resources', utils.normalizePlatformFolder(platform), 'app.js'), function (err, file) {
-
-					if (err) {
-						return done(err);
-					}
-
-					file.should.be.True;
-
-					done();
-				});
-
-			});
-
-		});
-
-		afterEach(function () {
-			utils.rm(fixturesCopy);
-			utils.rm(processPath);
 		});
 
 	});
