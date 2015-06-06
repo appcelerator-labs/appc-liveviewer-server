@@ -201,7 +201,7 @@ describe('lib/engine', function () {
 					var sourcePath = path.join(fixturesCopy, fixture);
 					var platform = 'ios';
 
-					mod.process(sourcePath, to, platform, function (err) {
+					mod.process(sourcePath, to, platform, null, function (err) {
 
 						if (err) {
 							return finish(err);
@@ -232,7 +232,7 @@ describe('lib/engine', function () {
 
 		it('should get me movies', function (done) {
 
-			mod.run('https://github.com/appcelerator/movies', 'ios', function (err, zip) {
+			mod.run('https://github.com/appcelerator/movies', 'ios', null, function (err, zip) {
 
 				if (err) {
 					return done(err);
