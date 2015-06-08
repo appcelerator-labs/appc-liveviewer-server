@@ -27,7 +27,7 @@ describe('lib/sources/github', function () {
 		path: '/bin/titanium'
 	}, userRepoBranch);
 
-	describe('#matchGitHubUrl', function () {
+	describe('#matchUrl', function () {
 
 		var tests = [{
 			input: 'https://github.com/' + userRepo.user + '/' + userRepo.repo,
@@ -55,7 +55,7 @@ describe('lib/sources/github', function () {
 		tests.forEach(function (test) {
 
 			it('should handle ' + test.input, function () {
-				mod.matchGitHubUrl(test.input).should.eql(test.output);
+				mod.matchUrl(test.input).should.eql(test.output);
 			});
 
 		});

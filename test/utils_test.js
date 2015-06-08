@@ -40,6 +40,94 @@ describe('lib/utils', function () {
 
 	});
 
+	describe('#mv', function () {
+
+		var tests = [{
+			path: 'classic',
+			analysis: {
+				path: '',
+				file: false
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'classic/Resources',
+			analysis: {
+				path: '/Resources',
+				file: false
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'supported.js',
+			analysis: {
+				path: '/Resources/app.js',
+				file: true
+			},
+			output: 'Resources/app.js'
+		}, {
+			path: 'alloy',
+			analysis: {
+				path: '',
+				file: false
+			},
+			output: 'app/controllers/index.js'
+		}, {
+			path: 'alloy/app',
+			analysis: {
+				path: '/app',
+				file: false
+			},
+			output: 'app/controllers/index.js'
+		}];
+
+		tests.forEach(function (test) {
+
+			it('should handle ' + test.path, function (done) {
+				var fixturesCopy = path.join(os.tmpdir(), uuid.v4());
+				var to = path.join(os.tmpdir(), uuid.v4());
+
+				function finish(err) {
+					var paths = [fixturesCopy];
+
+					if (err) {
+						console.error('CHECK: ' + to);
+					} else {
+						paths.push(to);
+					}
+
+					mod.rm(paths);
+
+					return done(err);
+				}
+
+				mod.cp(PATH_FIXTURES, fixturesCopy, function (err) {
+
+					if (err) {
+						return finish(err);
+					}
+
+					mod.mv(path.join(fixturesCopy, test.path), to + test.analysis.path, function (err) {
+
+						if (err) {
+							return finish(err);
+						}
+
+						return mod.isFile(path.join(to, test.output), function (err, file) {
+
+							if (err) {
+								return finish(err);
+							}
+
+							file.should.be.True;
+
+							return finish();
+						});
+
+					});
+				});
+			});
+		});
+	});
+
 	describe('#isFile', function () {
 
 		var tests = [{
