@@ -35,7 +35,9 @@ The server accepts the following URLs:
   * https://github.com/<user>/<repo>/tree/<branch>/<dir>
   * https://github.com/<user>/<repo>/tree/master/<dir>
   * https://github.com/<user>/<repo>/blob/<master>/<file>
-* **TODO:** GitHub gists URLs
+* GitHub gists URLs
+  * https://gist.github.com/<user>/<gist>
+  * https://gist.github.com/<user>/<gist>#file-<file>
 * **TODO:** URLs to ZIP files
 * **TODO:** TiFiddle URLs
 
@@ -86,12 +88,8 @@ var exec = engine.require('./lib/exec');
 exec('rm', '-rf', zip, function (err) {});
 ```
 
-## TODO
-
-* [ ] Support GitHub gist URLs
-* [ ] Support ZIP URLs
-* [ ] Support TiFiddle URLs
-* [ ] Include `i18n` folders in the zip as soon as the LiveViewer app support it
+## To Do
+See [issues](https://github.com/FokkeZB/appc-liveviewer-server/issues)
 
 ## Licensing
 This code is closed source and Confidential and Proprietary to Appcelerator, Inc. All Rights Reserved. This code MUST not be modified, copied or otherwise redistributed without express written permission of Appcelerator. This file is licensed as part of the Appcelerator Platform and governed under the terms of the Appcelerator license agreement. Your right to use this software terminates when you terminate your Appcelerator subscription.
