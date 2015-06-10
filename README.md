@@ -33,7 +33,6 @@ The server accepts the following URLs:
   * `https://github.com/<user>/<repo>`
   * `https://github.com/<user>/<repo>/tree/<branch>`
   * `https://github.com/<user>/<repo>/tree/<branch>/<dir>`
-  * `https://github.com/<user>/<repo>/tree/master/<dir>`
   * `https://github.com/<user>/<repo>/blob/<master>/<file>`
 * GitHub gists URLs
   * `https://gist.github.com/<user>/<gist>`
