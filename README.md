@@ -30,14 +30,13 @@ An URL to get the Alloy or Classic source code from.
 The server accepts the following URLs:
 
 * GitHub repositories:
-  * https://github.com/<user>/<repo>
-  * https://github.com/<user>/<repo>/tree/<branch>
-  * https://github.com/<user>/<repo>/tree/<branch>/<dir>
-  * https://github.com/<user>/<repo>/tree/master/<dir>
-  * https://github.com/<user>/<repo>/blob/<master>/<file>
+  * `https://github.com/<user>/<repo>`
+  * `https://github.com/<user>/<repo>/tree/<branch>`
+  * `https://github.com/<user>/<repo>/tree/<branch>/<dir>`
+  * `https://github.com/<user>/<repo>/blob/<master>/<file>`
 * GitHub gists URLs
-  * https://gist.github.com/<user>/<gist>
-  * https://gist.github.com/<user>/<gist>#file-<file>
+  * `https://gist.github.com/<user>/<gist>`
+  * `https://gist.github.com/<user>/<gist>#file-<file>`
 * **TODO:** URLs to ZIP files
 * **TODO:** TiFiddle URLs
 
