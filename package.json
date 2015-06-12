@@ -29,6 +29,7 @@
   "dependencies": {
     "alloy": "^1.6.0",
     "async": "^1.1.0",
+    "decompress": "^2.3.0",
     "fs-extra": "^0.18.4",
     "node-uuid": "^1.4.3",
     "request": "^2.57.0",
