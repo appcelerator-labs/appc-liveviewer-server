@@ -1,6 +1,6 @@
 # LiveViewer - Server
 
-Server-component for the Appcelerator LiveViewer app.
+Server-component for the [LiveViewer App](https://github.com/appcelerator/appc-liveviewer-app).
 
 It takes a target platform and source URL and returns a ZIP file of the (Alloy compiled) project.
 
@@ -11,7 +11,7 @@ It takes a target platform and source URL and returns a ZIP file of the (Alloy c
 ## Run the server
 
 ```
-git clone https://github.com/FokkeZB/appc-liveviewer-server
+git clone https://github.com/appcelerator/appc-liveviewer-server
 cd appc-liveviewer-server
 npm install
 npm start
@@ -37,39 +37,52 @@ The server accepts the following URLs:
 * GitHub gists URLs
   * `https://gist.github.com/<user>/<gist>`
   * `https://gist.github.com/<user>/<gist>#file-<file>`
-* **TODO:** URLs to ZIP files
-* **TODO:** TiFiddle URLs
+* URLs to a classic JavaScript or Alloy view file
+* URLs to a zip, tar, tar.bz2 or tar.gz file
+* **TODO:** TiFiddle URLs ([#12](https://github.com/appcelerator/appc-liveviewer-server/issues/12))
 
 ### Accepted source code
-The root of the downloaded source code (which can be a subdirectory in a repository as you can see form the accepted URLs) must contain:
 
-* To be detected as Alloy project:
-  * `app/controllers/index.js` or `app/controllers/<platform>/index.js`
-  * `controllers/index.js` or `controllers/<platform>/index.js`
+A directory must contain one of the following paths:
+
 * To be detected as Classic project:
   * `Resources/app.js` or `Resources/<platform>/app.js`
   * `app.js` or `<platform>/app.js`
-  
-As you can see the Alloy `app` folder or Classic `Resources` folder does not need to be wrapped in a project. For GitHub gists I even plan to support XML, TSS and JS files to be in the same directory and assume they are views, styles and controllers.
+* To be detected as Alloy project:
+  * `app/controllers/index.js` or `app/controllers/<platform>/index.js`
+  * `controllers/index.js` or `controllers/<platform>/index.js`
+  * `app/views/index.xml` or `app/views/<platform>/index.xml`
+  * `views/index.xml` or `views/<platform>/index.xml`
 
-### Param: `platform`
+A single file must either contain `Ti.UI.*` (classic) or `<Alloy>` (Alloy).
+
+### Param: `platform` (required)
 A string with one of:
 
 * `ios`
 * `android`
+
+### Param: `deployType` (optional)
+A string with one of:
+
+* `production` (default)
+* `development`
+* `test`
+
+This param is only used for Alloy.
 
 ## Require the engine
 
 ```
 var engine = require('appc-liveviewer-server');
 
-engine.auto('https://github.com/appcelerator/alloy/tree/master/samples/rss', 'ios', function(err, zip) {
+engine.auto('https://github.com/appcelerator/movies', 'ios', function(err, zip) {
 	// do something with the path to the zip file
-	// (and don't forget to clean up after)
+	// and don't forget to delete the zip file when you're done
 });
 ```
 
-### `auto(url, platform, callback)`
+### `auto(url, platform[, opts], callback)`
 
 #### Argument: `url`
 See [url](#param-url) under *Run the server*.
@@ -77,18 +90,14 @@ See [url](#param-url) under *Run the server*.
 #### Argument: `platform`
 See [platform](#param-platform) under *Run the server*.
 
+#### Argument: `opts `
+See [deployType](#param-deployType) under *Run the server*.
+
 #### Argument: `callback`
-Will be called with error as first argument and the path to the generated zip-file as the second.
-
-You should clean up the zip-file after you're done wit it. For example:
-
-```
-var exec = engine.require('./lib/exec');
-exec('rm', '-rf', zip, function (err) {});
-```
+Will be called with error as first argument and the path to the generated zip-file as the second. You should clean up the zip-file after you're done wit it.
 
 ## To Do
-See [issues](https://github.com/FokkeZB/appc-liveviewer-server/issues)
+See [issues](https://github.com/appcelerator/appc-liveviewer-server/issues)
 
 ## Licensing
 This code is closed source and Confidential and Proprietary to Appcelerator, Inc. All Rights Reserved. This code MUST not be modified, copied or otherwise redistributed without express written permission of Appcelerator. This file is licensed as part of the Appcelerator Platform and governed under the terms of the Appcelerator license agreement. Your right to use this software terminates when you terminate your Appcelerator subscription.
