@@ -19,11 +19,19 @@ npm start
 
 In production you'd probably use `forever start index.js` or something like that.
 
+### Fiddle
+
+Go to `/` to be redirected to `/fiddle` for a simple classic Titanium to JS-QR fiddle.
+
+* Running instance: [http://node.fokkezb.nl:8080/](http://node.fokkezb.nl:8080/)
+
 ### Compile
 
 Download (and compile Alloy) code via:
 
-[http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
+	/compile?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss
+	
+* Running instance: [http://node.fokkezb.nl:8080/compile?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://node.fokkezb.nl:8080/compile?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
 
 #### Param: `url`
 An URL to get the Alloy or Classic source code from.
@@ -72,12 +80,6 @@ A string with one of:
 * `test`
 
 This param is only used for Alloy.
-
-### Fiddle
-
-Go to `/` to be redirected to `/fiddle` for a simple classic Titanium to QR fiddle:
-
-[http://node.fokkezb.nl:8080/](http://node.fokkezb.nl:8080/)
 
 ## Require the engine
 
