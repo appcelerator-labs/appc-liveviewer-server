@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Appcelerator Fiddle</title>
+    <meta charset="utf-8"/>
+    <link rel=stylesheet href="/codemirror/lib/codemirror.css"/>
+    <script src="/codemirror/lib/codemirror.js"></script>
+    <script src="/codemirror/mode/javascript/javascript.js"></script>
+    <style type="text/css">
+    body {
+      background-color: #CD1625;
+      padding: 20px;
+      color: white;
+    }
+    #image {
+    	display: none;
+    }
+    </style>
+  </head>
+  <body>
+
+  	<h1>1. Code</h1>
+
+    <textarea id="texarea">var win = Ti.UI.createWindow({
+	backgroundColor: 'white'
+});
+win.add(Ti.UI.createLabel({
+	text: 'Hello world'
+}));
+win.open();</textarea>
+
+		<h1>2. Scan</h1>
+
+		<p id="loading">Generating...</p>
+
+		<img id="image" />
+  
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("texarea"), {
+        lineNumbers: true,
+        mode: "text/javascript",
+        matchBrackets: true,
+        tabSize: 2
+      });
+
+      function updateQR() {
+      	var image = document.getElementById('image');
+      	image.style.display = 'none';
+
+      	var loading = document.getElementById('loading');
+      	loading.style.display = 'block';
+
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+          var data;
+          if (request.readyState === 4) {
+          	if (request.status === 200 || window.location.href.indexOf("http") === -1) {
+            	data = request.responseText;
+          	} else {
+            	data = editor.getValue();
+          	}
+          	image.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=0&data=' + encodeURIComponent(data);
+          	image.style.display = 'block';
+          	loading.style.display = 'none';
+          }
+        };
+        request.open("POST", "http://closure-compiler.appspot.com/compile", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send('js_code=' + encodeURIComponent(editor.getValue()) + '&compilation_level=SIMPLE_OPTIMIZATIONS&output_format=text&output_info=compiled_code');
+      }
+
+      editor.on('change', updateQR);
+
+      updateQR();
+    </script>
+
+  </body>
+</html>
