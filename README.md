@@ -17,11 +17,13 @@ npm install
 npm start
 ```
 
-Then use it as:
+In production you'd probably use `forever start index.js` or something like that.
+
+### Compile
+
+Download (and compile Alloy) code via:
 
 [http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
-
-In production you'd probably use `forever start index.js` or something like that.
 
 ### Param: `url`
 An URL to get the Alloy or Classic source code from.
@@ -70,6 +72,12 @@ A string with one of:
 * `test`
 
 This param is only used for Alloy.
+
+### Fiddle
+
+Go to `/` to be redirected to `/fiddle` for a simple classic Titanium to QR fiddle:
+
+[http://node.fokkezb.nl:8080/](http://node.fokkezb.nl:8080/)
 
 ## Require the engine
 
