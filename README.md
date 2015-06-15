@@ -25,10 +25,10 @@ Download (and compile Alloy) code via:
 
 [http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss](http://localhost:8080/?platform=ios&url=https://github.com/appcelerator/alloy/tree/master/samples/rss)
 
-### Param: `url`
+#### Param: `url`
 An URL to get the Alloy or Classic source code from.
 
-#### Accepted URLs
+##### Accepted URLs
 The server accepts the following URLs:
 
 * GitHub repositories:
@@ -43,7 +43,7 @@ The server accepts the following URLs:
 * URLs to a zip, tar, tar.bz2 or tar.gz file
 * **TODO:** TiFiddle URLs ([#12](https://github.com/appcelerator/appc-liveviewer-server/issues/12))
 
-### Accepted source code
+##### Accepted source code
 
 A directory must contain one of the following paths:
 
@@ -58,13 +58,13 @@ A directory must contain one of the following paths:
 
 A single file must either contain `Ti.UI.*` (classic) or `<Alloy>` (Alloy).
 
-### Param: `platform` (required)
+#### Param: `platform` (required)
 A string with one of:
 
 * `ios`
 * `android`
 
-### Param: `deployType` (optional)
+#### Param: `deployType` (optional)
 A string with one of:
 
 * `production` (default)
